@@ -1,0 +1,222 @@
+// Que1
+
+// input format
+// 4
+// 1 4 2 3
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int comp (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+int maxarr(int* a,int s, int e){
+    int max=0;
+    for(int i=s;i<=e;i++){
+        if(max<a[i])
+            max=a[i];
+    }
+    return max;
+}
+int minarr(int* a,int s, int e){
+    int min=9999999;
+    for(int i=s;i<=e;i++){
+        if(min>a[i])
+            min=a[i];
+    }
+    return min;
+}
+int main(){
+    int n;
+    cin >> n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin >> a[i];
+    }
+    
+    int max_sub=0;
+    for(int i=1;i<=n;i++){
+        
+            
+        for(int j=1;j<=n-i+1;j++){
+            
+            int temp = minarr(a,j-1,j+i-2);
+            
+            if( max_sub < (temp*i) ){
+                
+                max_sub = temp*i;
+                
+            }
+            
+        }   
+        
+    }
+    cout << max_sub;
+}
+
+
+// Que2
+
+// input format
+// 4 3
+// 1 4 2 3
+// 3 2 4
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int comp (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+int print_arr(int* a, int n){
+    for(int i=0; i < n; i++){
+        cout << a[i] << " ";
+    }
+}
+int main(){
+    int n,m;
+    cin >> n >> m;
+    int a[n], b[m], c[n+m];
+    for(int i=0;i<n;i++){
+        cin >> a[i];
+    }
+    for(int i=0;i<m;i++){
+        cin >> b[i];
+    }
+    
+    qsort(a,n,sizeof(int),comp);
+    qsort(b,m,sizeof(int),comp);
+
+    int ptr_a=0, ptr_b=0, ptr_c=0;
+    for(int i=0; i < (n+m); i++){
+        if(i<n)
+            c[i] = a[i];
+        else
+            c[i] = b[i-n];
+
+    }
+    qsort(c,n+m,sizeof(int),comp);
+    for(int i=0; i < (n+m); i++){
+        if(i<n)
+            a[ptr_a++] = c[i];
+        else
+            b[ptr_b++] = c[i];
+    }
+    
+    print_arr(a,n);
+    cout << "\n";
+    print_arr(b,m);
+    
+}
+
+
+// Que 3
+// input format
+// 4 3
+// ABHK
+// BCK
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int comp (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+int print_arr(int* a, int n){
+    for(int i=0; i < n; i++){
+        cout << a[i] << " ";
+    }
+}
+int main(){
+    int n,m;
+    cin >> n >> m;
+    string a,b;
+    string c="";
+    cin >> a >> b;
+    
+    for(int i=0 ; i<n ; i++){
+        for(int j=0 ; j<m ; j++){
+            
+            if(a[i]==b[j]){
+                c += a[i];
+                b[j]='-1';
+            }
+            
+        }
+    }
+    cout << c;
+    return 0;
+}
+
+// Que 4
+// input format
+// 4 
+// 1 4 0 3
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int comp (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+int maxarr(int* a,int s, int e){
+    int max=0;
+    for(int i=s;i<=e;i++){
+        if(max<a[i])
+            max=a[i];
+    }
+    return max;
+}
+int sumarr(int* a,int s, int e){
+    int sum = 0;
+    for(int i=s;i<=e;i++)
+        sum += a[i];
+    return sum;
+}
+int main(){
+    int n;
+    cin >> n;
+    int a[n];
+    for(int i=0;i<n;i++){
+        cin >> a[i];
+    }
+    
+    int condition = 0, str_pos = -1, end_pos = -1 ;
+    for(int i=1;i<=n;i++){
+        
+            
+        for(int j=1;j<=n-i+1;j++){
+            
+            if(sumarr(a,j-1,j+i-2) == 0){
+                
+                condition = 1;
+                str_pos = j-1;
+                end_pos = j+i-2;
+                break;
+                
+            }
+            
+        }   
+        
+        if(condition == 1){
+            break;
+        }
+        
+    }
+    
+    if(condition == 1){
+        cout << "Yes\n";
+        for(int i = str_pos; i <= end_pos; i++){
+            cout << a[i] << " ";
+        }
+    } else {
+        cout << "No";
+    }
+
+}
